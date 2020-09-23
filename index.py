@@ -1,5 +1,4 @@
-# from player_stats.player import Player
-from player_stats.stats import Stats
+from player_stats.images import Images
 
 # polly = Player("Gabriel", "Meireles")
 
@@ -16,5 +15,5 @@ players = [
 ]
 
 for player in players:
-    stats = Stats(player['photo'], player['profile'], player['text'], player['filter'], player['club'], 'testing')
-    print(stats.save())
+    # stats = Stats()
+    print(Images.save(player['photo'], player['profile'], player['text'], player['filter'], player['club'], 'testing'))

@@ -1,4 +1,5 @@
 from PIL import Image
+from .files import Files
 
 class Images(object):
     def __init__(self, image):
@@ -62,3 +63,26 @@ class Images(object):
         width, height = im.size
 
         return (int((width-125)/2), 525)
+
+    @staticmethod
+    def save(photo, profile, text, filter, club, testing):
+        #Open the image
+        background_image = Files.open_url(photo)
+        
+        #Resize and crop
+        background_image = Images.treat_image(background_image)
+
+        #Set the black grandient layer
+        background_image = Images.set_gradient(background_image, 'full')
+        background_image = Images.set_gradient(background_image, 'footer')
+
+        #Apply the Data Science logo
+        logo = Files.open_local('./src/images/logo.png')
+        background_image = Images.apply_image(background_image, logo, (10, 10), (75, 75))
+
+        #Apply the club crest
+        if club:
+            crest = Files.open_url(club)
+            background_image = Images.apply_image(background_image, crest, Images.get_crest_position(background_image), (125, 125))
+        
+        background_image.show()
