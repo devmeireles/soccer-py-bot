@@ -1,34 +1,53 @@
 from .files import Files
-from .images import Images
+import requests
+from bs4 import BeautifulSoup as bs
+import re
+
 
 class Stats(object):
 
-    def __init__ (self, photo, profile, text, filter, club, folder):
+    def __init__(self, photo, profile, text, filter, club, folder):
         self.photo = photo
         self.profile = profile
         self.text = text
         self.filter = filter
         self.club = club
         self.folder = folder
-    
-    def save(self):
-        #Open the image
-        background_image = Files.open_url(self.photo)
-        
-        #Resize and crop
-        background_image = Images.treat_image(background_image)
 
-        #Set the black grandient layer
-        background_image = Images.set_gradient(background_image, 'full')
-        background_image = Images.set_gradient(background_image, 'footer')
+    @staticmethod
+    def get_player_data(url, filter):
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"}
 
-        #Apply the Data Science logo
-        logo = Files.open_local('./src/images/logo.png')
-        background_image = Images.apply_image(background_image, logo, (10, 10), (75, 75))
+        html = requests.get(url, headers=headers)
+        soup = bs(html.content, features="html.parser")
 
-        #Apply the club crest
-        if self.club:
-            crest = Files.open_url(self.club)
-            background_image = Images.apply_image(background_image, crest, Images.get_crest_position(background_image), (125, 125))
-        
-        background_image.show()
+        player = soup.select(
+            '.dataMain > .dataTop > .dataName > h1 > b')[0].text
+
+        if filter:
+            table = soup.select(
+                '.responsive-table > .grid-view > .items > tbody')[0]
+            leagues = table.find_all('tr')
+
+            for league in leagues:
+                if league.td.img['title'] == filter:
+                    apps = 0 if league.find_all(
+                        'td')[2].text == '-' else league.find_all('td')[2].text
+                    goals = 0 if league.find_all(
+                        'td')[3].text == '-' else league.find_all('td')[3].text
+                    assists = 0 if league.find_all(
+                        'td')[4].text == '-' else league.find_all('td')[4].text
+        else:
+            tfoot = soup.select(
+                '.responsive-table > .grid-view > .items > tfoot')[0]
+            values = tfoot.find_all(
+                True, {"class": re.compile("^(zentriert)$")})
+
+            apps = values[0].text
+            goals = values[1].text
+            assists = values[2].text
+
+        return {
+            'apps': apps, 'goals': goals, 'assists': assists, 'player': player
+        }
