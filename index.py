@@ -1,5 +1,5 @@
 # from player_stats.player import Player
-from player_stats.handlers.stats import Stats
+from player_stats.stats import Stats
 
 # polly = Player("Gabriel", "Meireles")
 
