@@ -1,3 +1,6 @@
+# from player_stats.images import Images
+# from player_stats.data import Data
+
 players = [
     {
         'photo': 'https://assets-es.imgfoot.com/media/cache/1200x1200/luis-suarez-barca-2020.jpg',
