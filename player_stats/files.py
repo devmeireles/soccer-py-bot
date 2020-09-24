@@ -4,6 +4,7 @@ from io import BytesIO
 import os
 import unidecode
 import re
+import json
 
 
 class Files(object):
@@ -38,3 +39,16 @@ class Files(object):
     @staticmethod
     def get_file_name(input1, input2):
         return f"{Files.slugfy(input1)}-{Files.slugfy(input2)}"
+
+    @staticmethod
+    def write_json(file, data):
+         with open(file, 'w') as json_file:
+            json.dump(data, json_file, indent=4)
+
+    @staticmethod
+    def save_json(file, data):
+        with open(file) as json_file: 
+            temp = json.load(json_file) 
+            temp.append(data)
+            
+        Files.write_json(file, temp) 
