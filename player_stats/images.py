@@ -62,7 +62,7 @@ class Images(object):
             return height
 
     @staticmethod
-    def get_crest_position(im, crest, title):
+    def get_crest_position(im, crest, title, crest_i, crest_len):
         width, height = im.size
         crest_width, crest_height = crest.size
 
@@ -70,9 +70,22 @@ class Images(object):
         title_font = ImageFont.truetype('./src/fonts/Lato-Bold.ttf', 60)
         title_width, title_height = draw.textsize(title, font=title_font)
 
-        print(int((height-title_height)/2)+(crest_height-title_height))
+        print(int((((width-crest_width) / 2) + (crest_i*2)) ), 445)
 
-        return (int((width-crest_width)/2), 445)
+        if crest_len == 1:
+            return (int((((width-crest_width) / 2) / crest_i) ), 445)
+        elif crest_len == 2:
+            if crest_i == 1:
+                return (int((((width-crest_width) / crest_len) - 75) ), 445)
+            elif crest_i == 2:
+                return (int((((width-crest_width) / 2) + 75) ), 445)
+        elif crest_len == 3:
+            if crest_i == 1:
+                return (int((((width-crest_width) / crest_len)) - 25 ), 445)
+            elif crest_i == 2:
+                return (int((((width-crest_width) / 2)) ), 445)
+            elif crest_i == 3:
+                return (int((((width-crest_width) / 2) + (crest_width+20))), 445)
 
     @ staticmethod
     def set_stats(im, stats, text):
@@ -167,13 +180,16 @@ class Images(object):
         # Apply the club crest
         if crest:
             thumb_size = 125, 125
-            crest = Files.open_url(crest)
-            crest.thumbnail(thumb_size, Image.ANTIALIAS)
-            crest_position = Images.get_crest_position(background_image, crest, stats['player'])
-            background_image = Images.apply_image(
-                background_image, crest, crest_position, (crest.size))
+            for i in range(len(crest)):
+                crest_i = i+1
+                crest_len = len(crest)
+                crest_item = Files.open_url(crest[i])
+                crest_item.thumbnail(thumb_size, Image.ANTIALIAS)
+                crest_position = Images.get_crest_position(background_image, crest_item, stats['player'], crest_i, crest_len)
+                background_image = Images.apply_image(
+                    background_image, crest_item, crest_position, (crest_item.size))
 
         file_name=Files.get_file_name(stats['player'], text)
         Files.save(background_image, folder, file_name)
 
-        background_image.show()
+        # background_image.show()
