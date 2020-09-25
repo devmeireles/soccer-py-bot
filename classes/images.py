@@ -1,6 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw
-from .files import Files
-from .stats import Stats
+from classes.files import Files
+from classes.stats import Stats
 
 
 class Images(object):
