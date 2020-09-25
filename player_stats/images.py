@@ -193,3 +193,8 @@ class Images(object):
         Files.save(background_image, folder, file_name)
 
         # background_image.show()
+
+    @staticmethod
+    def draw_square(size, position, color):
+        im = Image.new('RGB', size, color=color)
+        return im
