@@ -23,17 +23,22 @@ from player_storyboard.storyboard import Storyboard
 
 data = [
     {
-        'bg_color_1': '#034694',
-        'bg_color_2': '#d1d3d4',
-        'photo': 'https://allmysportsnews.com/wp-content/uploads/2020/09/csportfoto22_GettyImages-1228616806-820x410.jpg',
+        'bg_color_1': '#d7402c',
+        'bg_color_2': '#fbf144',
+        'photo': 'https://images.daznservices.com/di/library/GOAL/a8/8a/donny-van-de-beek-manchester-united-2020_tjlxhbci1wmp1atuobo9xotq0.jpg?t=-1408125100&quality=100',
     },
-    # {
-    #     'bg_color_1': 'red',
-    #     'bg_color_2': 'black',
-    #     'photo': 'https://www.lance.com.br/files/article_main/uploads/2020/04/15/5e975e2acf24d.jpeg',
-    # }
+    {
+        'bg_color_1': 'red',
+        'bg_color_2': 'white',
+        'photo': 'https://www.fcbarcelonanoticias.com/uploads/s1/11/65/07/6/van-de-beek-madrid.jpeg',
+    },
+    {
+        'bg_color_1': '#ca5d25',
+        'bg_color_2': '#132771',
+        'photo': 'https://www.rousingthekop.com/static/uploads/4/2019/06/GettyImages-1148441987-1440x960.jpg',
+    }
 ]
 
-profile = 'https://www.transfermarkt.com/kai-havertz/leistungsdatendetails/spieler/68290/saison//verein/0/liga/0/wettbewerb//pos/0/trainer_id/0/plus/1'
+profile = 'https://www.transfermarkt.com/kai-havertz/leistungsdatendetails/spieler/288255/saison//verein/0/liga/0/wettbewerb//pos/0/trainer_id/0/plus/1'
 
-Storyboard.save(data, profile)
+Storyboard.save(data, profile, '288255')

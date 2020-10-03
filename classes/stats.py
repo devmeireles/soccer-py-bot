@@ -99,7 +99,7 @@ class Stats(object):
                 squad = cells.find_all('td')[4].text
                 apps = cells.find_all('td')[5].a.text
                 goals = cells.find_all('td')[7].text
-                assists = cells.find_all('td')[7].text
+                assists = cells.find_all('td')[8].text
 
                 stats_item = {
                     'season': season,
@@ -115,5 +115,4 @@ class Stats(object):
         except IndexError:
             pass
 
-        # print(stats)
         return stats, bio, ribbon

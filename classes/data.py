@@ -51,6 +51,13 @@ class Data(object):
         return (ids)
 
     @staticmethod
+    def format_position(position):
+        if position == 'Attacking Midfield':
+            return 'Attacking Midfielder'
+        elif position == 'Central Midfield':
+            return 'Central Midfielder'
+
+    @staticmethod
     def get_bio(data, country):
         player = {
             'name': '',
@@ -60,7 +67,9 @@ class Data(object):
             'place_birth': '',
             'country_birth': '',
             'citizenship': '',
-            'current_international': ''
+            'current_international': '',
+            'national_apps': '',
+            'national_goals': '',
         }
 
         for values in data:
@@ -70,17 +79,17 @@ class Data(object):
                 player['name'] = split_value[1]
 
             if split_value[0] == 'Position':
-                player['position'] = split_value[1]
-            
+                player['position'] = Data.format_position(split_value[1])
+
             if split_value[0] == 'Date of birth/Age':
                 player['birth_date'] = split_value[1]
-            
+
             if split_value[0] == 'Contract expires':
                 player['contract'] = split_value[1]
 
             if split_value[0] == 'Place of birth':
                 player['place_birth'] = split_value[1]
-            
+
             if split_value[0] == 'Place of birth':
                 player['place_birth'] = split_value[1]
 
@@ -96,8 +105,13 @@ class Data(object):
             if split_value[0] == 'National player':
                 player['current_international'] = split_value[1]
 
-            if split_value[0] == 'Current international':
+            if split_value[0] == 'Current iget_bionternational':
                 player['current_international'] = split_value[1]
+
+            if split_value[0] == 'Caps/Goals':
+                split_national = split_value[1].split('/')
+                player['national_apps'] = split_national[0]
+                player['national_goals'] = split_national[1]
 
         if len(country[0]) > 0:
             player['country_birth'] = country[0]

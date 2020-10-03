@@ -70,8 +70,6 @@ class Images(object):
         title_font = ImageFont.truetype('./src/fonts/Lato-Bold.ttf', 60)
         title_width, title_height = draw.textsize(title, font=title_font)
 
-        print(int((((width-crest_width) / 2) + (crest_i*2)) ), 445)
-
         if crest_len == 1:
             return (int((((width-crest_width) / 2) / crest_i) ), 445)
         elif crest_len == 2:
